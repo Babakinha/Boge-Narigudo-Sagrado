@@ -24,16 +24,34 @@ const flipa = {
 
     async execute(message, args) {
         const url = args[0]
-        if(!url) message.reply("Por favor mande uma url\n Ex: DOGE.flipa https://imgur.com/qjUFwno.png");
+        if(!url) return message.reply("Por favor mande uma url\n Ex: DOGE.flipa https://imgur.com/qjUFwno.png");
+        
+        try {
+            const start = Date.now()
+            let {stream, runner} = await createVideo(url);
+    
+            
+            attachment = new Discord.MessageAttachment(stream, 'NeverGonnaGiveYouUp.png');
+            await runner.run() // Run baybe RUN!!!!
+            const stop = Date.now()
 
-        let {stream, runner} = await createVideo(url);
+            let embed = {
+                color: 0x40E0D0,
+                title: "Flipado!",
+                image: {
+                    url: "attachment://NeverGonnaGiveYouUp.png"
+                },
+                footer: {
+                    text: `Levou ${(stop - start)/1000} segundos para renderizar`,
+                    icon_url: url
+                }
+            }
 
-        let embed = new Discord.MessageEmbed()
-            .setImage("attachment://name.png");
+            return message.channel.send({ embed: embed, files: [attachment] });
 
-        attachment = new Discord.MessageAttachment(stream, 'name.png');
-        runner.run() // Run baybe RUN!!!!
-        message.channel.send({ embed: embed, files: [attachment] });
+        }catch(e) {
+            return message.reply("Desculpa, Algo deu errado aqui, tente usar outra imagem?")
+        }
 
     },
     interaction(client, interaction) {
