@@ -31,7 +31,7 @@ const flipa = {
             let {stream, runner} = await createVideo(url);
     
             
-            attachment = new Discord.MessageAttachment(stream, 'NeverGonnaGiveYouUp.png');
+            let attachment = new Discord.MessageAttachment(stream, 'NeverGonnaGiveYouUp.png');
             await runner.run() // Run baybe RUN!!!!
             const stop = Date.now()
 
@@ -54,15 +54,65 @@ const flipa = {
         }
 
     },
-    interaction(client, interaction) {
-        client.api.interactions(interaction.id, interaction.token).callback.post({
+    async interaction(client, interaction) {
+        const url = interaction.data.options[0].value
+        console.log(url)
+        if(!url) return client.api.interactions(interaction.id, interaction.token).callback.post({
+            data: {
+                    type: 4,
+                    data: {
+                            content: "Por favor mande uma url\n Ex: DOGE.flipa https://imgur.com/qjUFwno.png"
+                    }
+            }
+        });
+        
+        try {
+            const start = Date.now()
+            let {stream, runner} = await createVideo(url);
+            
+            
+            let attachment = new Discord.MessageAttachment(stream, 'NeverGonnaGiveYouUp.png');
+            await runner.run(); // Run baybe RUN!!!!
+            const stop = Date.now();
+            
+            let embed = {
+                color: 0x40E0D0,
+                title: "Flipado!",
+                image: {
+                    url: "attachment://NeverGonnaGiveYouUp.png"
+                },
+                footer: {
+                    text: `Levou ${(stop - start)/1000} segundos para renderizar`,
+                    icon_url: url
+                }
+            };
+            await client.users.fetch('487644363124637718').then((user) => user.send({ embed: embed, files: [attachment] }).then(msg => {
+                embed.image.url = msg.embeds[0].image.url;
+                msg.delete();
+            })
+            .catch(console.error)
+            );
+            
+            return client.api.interactions(interaction.id, interaction.token).callback.post({
                 data: {
                         type: 4,
                         data: {
-                                content: "Em construção"
+                            embeds: [embed]
                         }
                 }
-        })
+            });
+
+        }catch(e) {
+            return client.api.interactions(interaction.id, interaction.token).callback.post({
+                data: {
+                        type: 4,
+                        data: {
+                                content: "Desculpa, Algo deu errado aqui, tente usar outra imagem?"
+                        }
+                }
+            })
+        }
+        
     }
 
 };
