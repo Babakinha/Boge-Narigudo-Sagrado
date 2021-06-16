@@ -1,0 +1,24 @@
+{
+  "name": "boge-narigudo-sagrado",
+  "version": "0.0.1",
+  "description": "Sagrado",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Doge",
+    "narigudo",
+    "sagrado",
+    "bot",
+    "discord"
+  ],
+  "author": "Babakinha",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0",
+    "lowdb": "^2.1.0",
+    "request": "^2.88.2"
+  }
+}
