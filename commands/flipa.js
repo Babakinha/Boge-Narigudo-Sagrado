@@ -1,23 +1,13 @@
-var ffmpeg = require('ffmpeg-stream');
 const Discord = require('discord.js')
-const { createReadStream, createWriteStream } = require("fs")
+const Jimp = require('jimp');
 
-async function createVideo(url) {
-    const newName = Math.random().toString(36).substr(2, 5);
-    try {
-        const flipper = new ffmpeg.Converter();
-        flipper.createInputFromFile(url)
-
-        let stream = flipper.createOutputStream({
-            f: "image2",
-            vf: "hflip",
-        })
-        return {stream: stream, runner: flipper}
-    }catch(e){
-        console.log(e.code);
-        console.log(e.msg);
-    }
+async function processImage(url) {
+    img = await Jimp.read(url)
+    await img.flip(true, false);
+    return img.getBufferAsync("image/png");
 }
+
+
 const flipa = {
     name: 'flipa',
     description: 'Flipa uma imagem',
@@ -27,36 +17,33 @@ const flipa = {
         if(!url) return message.reply("Por favor mande uma url\n Ex: DOGE.flipa https://imgur.com/qjUFwno.png");
         
         try {
+            c//Processamento vai aqui
             const start = Date.now()
-            let {stream, runner} = await createVideo(url);
-    
+
             
-            let attachment = new Discord.MessageAttachment(stream, 'NeverGonnaGiveYouUp.png');
-            await runner.run() // Run baybe RUN!!!!
+            buffer = await processImage(url);
+
+
             const stop = Date.now()
+            //Termina aqui
+            let attachment = new Discord.MessageAttachment(buffer, 'NeverGonnaGiveYouUp.png');
 
-            let embed = {
-                color: 0x40E0D0,
-                title: "Flipado!",
-                image: {
-                    url: "attachment://NeverGonnaGiveYouUp.png"
-                },
-                footer: {
-                    text: `Levou ${(stop - start)/1000} segundos para renderizar`,
-                    icon_url: url
-                }
-            }
-
-            return message.channel.send({ embed: embed, files: [attachment] });
+            let embed = new Discord.MessageEmbed()
+                .setColor(0x40E0D0)
+                .setTitle("Flipado!")
+                .attachFiles([attachment])
+                .setImage("attachment://NeverGonnaGiveYouUp.png")
+                .setFooter(`Levou ${(stop - start)/1000} segundos para renderizar`, url);
+            return message.channel.send(embed);
 
         }catch(e) {
+            console.log(e)
             return message.reply("Desculpa, Algo deu errado aqui, tente usar outra imagem?")
         }
 
     },
     async interaction(client, interaction) {
         const url = interaction.data.options[0].value
-        console.log(url)
         if(!url) return client.api.interactions(interaction.id, interaction.token).callback.post({
             data: {
                     type: 4,
@@ -67,42 +54,39 @@ const flipa = {
         });
         
         try {
+            //Processamento vai aqui
             const start = Date.now()
-            let {stream, runner} = await createVideo(url);
+
+
+            buffer = await processImage(url);
+
+
+            const stop = Date.now()
+            //Termina aqui
+            let attachment = new Discord.MessageAttachment(buffer, 'NeverGonnaGiveYouUp.png');
+
+            let embed = new Discord.MessageEmbed()
+                .setColor(0x40E0D0)
+                .setTitle("Flipado!")
+                .attachFiles([attachment])
+                .setImage("attachment://NeverGonnaGiveYouUp.png")
+                .setFooter(`Levou ${(stop - start)/1000} segundos para renderizar`, url);
+
+            const channel = await client.channels.fetch(interaction.channel_id)
+            const message = await channel.send(embed);
             
-            
-            let attachment = new Discord.MessageAttachment(stream, 'NeverGonnaGiveYouUp.png');
-            await runner.run(); // Run baybe RUN!!!!
-            const stop = Date.now();
-            
-            let embed = {
-                color: 0x40E0D0,
-                title: "Flipado!",
-                image: {
-                    url: "attachment://NeverGonnaGiveYouUp.png"
-                },
-                footer: {
-                    text: `Levou ${(stop - start)/1000} segundos para renderizar`,
-                    icon_url: url
-                }
-            };
-            await client.users.fetch('487644363124637718').then((user) => user.send({ embed: embed, files: [attachment] }).then(msg => {
-                embed.image.url = msg.embeds[0].image.url;
-                msg.delete();
-            })
-            .catch(console.error)
-            );
             
             return client.api.interactions(interaction.id, interaction.token).callback.post({
                 data: {
                         type: 4,
                         data: {
-                            embeds: [embed]
+                            content: `This is the best i can do :) \n ${message.url}`
                         }
                 }
             });
 
         }catch(e) {
+            console.log(e)
             return client.api.interactions(interaction.id, interaction.token).callback.post({
                 data: {
                         type: 4,

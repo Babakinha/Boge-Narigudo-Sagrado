@@ -34,7 +34,7 @@ function getProfilePic(user, callback) {
 
 const roleta = {
     name: 'roleta',
-    description: 'Pega uma foto de alguém aleatório do server',
+    description: 'Responde com uma foto de alguém aleatório do server',
 
     async execute(message, args) {
         const guildCache = message.guild;

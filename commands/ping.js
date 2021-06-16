@@ -2,7 +2,7 @@ const kaomojis = ['(つ✧ω✧)つ', '(づ￣ ³￣)づ', '(づ ◕‿◕ )づ'
 
 const ping = {
     name: 'ping',
-    description: 'Ping!',
+    description: 'Comando de ping simples!',
 
     execute(message, args) {
             message.channel.send('__〆(￣ー￣ )\nFazendo umas matimatica...')

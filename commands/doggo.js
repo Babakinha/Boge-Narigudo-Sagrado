@@ -6,7 +6,7 @@ const neko = new client();
 
 const doggo = {
     name: 'doggo',
-    description: 'Da um dog aleatório (Cortesia de nekos.life)',
+    description: 'Responde com uma foto de dog aleatória (Cortesia de nekos.life)',
     embed: {
             color: 0x40E0D0,
             title: `Doggo („ಡωಡ„)`,
