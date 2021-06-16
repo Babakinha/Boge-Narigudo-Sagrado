@@ -60,7 +60,6 @@ const roleta = {
         const user = client.users.cache.get(membro.id)
 
         const avatar = await getProfilePic(user)
-        console.log(avatar)
 
 
         const embed = {
