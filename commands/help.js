@@ -3,7 +3,7 @@ helpMessage = "Agente ainda esta trabalhando nisso (ノ\\*°▽°\\*)"
 
 
 
-const ping = {
+const help = {
     name: 'help',
     description: 'Mostra uma mensagem de ajuda',
 
@@ -23,4 +23,4 @@ const ping = {
 
 };
 
-module.exports = ping;
+module.exports = help;
