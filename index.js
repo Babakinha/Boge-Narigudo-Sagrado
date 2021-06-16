@@ -48,7 +48,6 @@ Client.on('message', (message) => {
 
         const args = message.content.slice(Prefix.length).trim().split(/ +/);
         const command = args.shift().toLowerCase();
-
     try {
         Client.commands.get(command).execute(message, args);
     } catch (error) {
