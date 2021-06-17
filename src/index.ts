@@ -23,18 +23,26 @@ export interface messageEvent {
     dev: boolean
 
 }
-
 export interface interactionEvent {
     interaction: Discord.CommandInteraction,
     client: Discord.Client,
     dev: boolean
-
+    
 }
+export interface commandInterface {
+    names: string[],
+    run: {
+        message: (event: messageEvent) => any,
+        interaction: (event: interactionEvent) => any
+    }
+};
+
 var ClientOptions : Discord.ClientOptions = {
     intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES]
 };
+
 const Client = new Discord.Client(ClientOptions);
-const Commands: Discord.Collection<string[], {message: (event: messageEvent) => any, interaction: (event: interactionEvent) => any}> = new Discord.Collection();
+const Commands: Discord.Collection<commandInterface["names"], commandInterface["run"]> = new Discord.Collection();
 
 //Load Commands
 Fs.readdir(__dirname+'/commands/', (err, allFiles) => {
@@ -42,8 +50,9 @@ Fs.readdir(__dirname+'/commands/', (err, allFiles) => {
     let files = allFiles.filter(f => f.split('.').pop() === ('ts'));
     if (files.length <= 0) console.log('No commands found!');
     else for(let file of files) {
-        const props = require(`./commands/${file}`) as {names: string[], run: {message: (event: messageEvent) => any, interaction: (event: interactionEvent) => any}};
+        const props = require(`./commands/${file}`) as commandInterface;
         Commands.set(props.names, props.run);
+        require('./commands/Doggo')
     }
 });
 
@@ -51,13 +60,13 @@ Fs.readdir(__dirname+'/commands/', (err, allFiles) => {
 Client.once('ready', async () => {
     console.log("Bot is on!");
     Client.user!.setActivity('A mãe do samir na cama', { type: 'PLAYING'});
+
 });
 
 Client.on('interaction', async (interaction) => {
     if(!interaction.isCommand()) return;
     try {
-        const commandFile = Commands.find((r, n) => {if(!n) return false;return n.includes(interaction.commandName);});
-        //n.includes(interaction.commandName);
+        const commandFile = Commands.find((r, n) => {if(!n) return false;return n.includes(interaction.commandName)});
         if(!commandFile) throw TypeError;
         else commandFile.interaction({
             interaction: interaction,
@@ -81,7 +90,7 @@ Client.on('message', async (message) => {
     const command = args.shift()!.toLowerCase();
     
     try {
-        const commandFile = Commands.find((r, n) => {if(!n) return false;return n.includes(command);});
+        const commandFile = Commands.find((r, n) => {if(!n) return false;return n.includes(command)});
         if(!commandFile) throw TypeError;
         else commandFile.message({
             message: message,
