@@ -3,11 +3,11 @@
 import * as Fs from 'fs';
 import * as Discord from 'discord.js';
 import * as dotenv from "dotenv";
-import { Prefix } from '../defaultConfig.json';
+import { Prefix } from './defaultConfig.json';
 
 //Load environment variables
 try {
-    dotenv.config({ path: __dirname+'/../.env' });
+    dotenv.config({ path: __dirname+'/.env' });
 } catch (error) {
     console.log(".env file not found, (*ﾉ▽ﾉ) GOING IN BLIND");
 } 
@@ -47,7 +47,7 @@ const Commands: Discord.Collection<commandInterface["names"], commandInterface["
 //Load Commands
 Fs.readdir(__dirname+'/commands/', (err, allFiles) => {
     if (err) console.log(err);
-    let files = allFiles.filter(f => f.split('.').pop() === ('ts'));
+    let files = allFiles.filter(f => f.split('.').pop() === (dev ? 'ts' : 'js'));
     if (files.length <= 0) console.log('No commands found!');
     else for(let file of files) {
         const props = require(`./commands/${file}`) as commandInterface;
