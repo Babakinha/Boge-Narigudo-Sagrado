@@ -1,6 +1,6 @@
 //Imports
 import { messageEvent, interactionEvent, commandInterface } from "../index";
-import { MessageEmbed, MessageAttachment,SnowflakeUtil } from 'discord.js'
+import { MessageEmbed, MessageAttachment, Util } from 'discord.js'
 const petPetGif = require('pet-pet-gif')
 
 const kaomojis = ['(つ✧ω✧)つ', '(づ￣ ³￣)づ', '(づ ◕‿◕ )づ', '(づ◡﹏◡)づ', '(つ . •́ _ʖ •̀ .)つ'] // is there a kaomoji package?
@@ -29,16 +29,15 @@ const doggo: commandInterface = {
                 if (url.startsWith('!')) {
                     url = url.slice(1);
                 }
-                
-                const user = await e.client.users.fetch(SnowflakeUtil.generate(Number(url))); //Guess i cant use just the string
-                url = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`
+
+                const user = await e.client.users.fetch(Util.binaryToID(BigInt(String(url)).toString(2))); //I hate snowflakes
+                url = user.displayAvatarURL().replace(/.webp/, ".png?size=4096");
             }
 
             //Make and Send gif
             try {
                 let animatedGif = await petPetGif(url)
                 const attachment = new MessageAttachment(animatedGif, 'pet.gif');
-                
                 return e.message.reply({embeds: [embed], files: [attachment]});
     
             }catch(error) {
