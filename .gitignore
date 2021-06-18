@@ -107,6 +107,7 @@ dist
 build/
 
 # Vscode workspace
+.vscode/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

@@ -20,7 +20,7 @@ const doggo: commandInterface = {
         async message(e: messageEvent){
             //Check args
             let url = e.args[0]
-            if(!url) return e.message.reply("Por favor mande uma url ou mencione alguem\n Ex: DOGE.pet https://imgur.com/qjUFwno.png");
+            if(!url) return e.message.reply("Por favor mande uma url ou mencione alguém\n Ex: DOGE.pet https://imgur.com/qjUFwno.png");
 
             //Check for mention
             if (url.startsWith('<@') && url.endsWith('>')) {
@@ -52,7 +52,7 @@ const doggo: commandInterface = {
                         e.interaction.options.get("imagem")?.value;
             
 
-            if(!url) return e.interaction.reply("Por favor mande uma url ou mencione alguem\n Ex: DOGE.pet https://imgur.com/qjUFwno.png");
+            if(!url) return e.interaction.reply("Por favor mande uma url ou mencione alguém\n Ex: DOGE.pet https://imgur.com/qjUFwno.png");
             //Make and Send gif
             try {
                 let animatedGif = await petPetGif(url)
