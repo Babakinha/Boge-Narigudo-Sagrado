@@ -22,20 +22,21 @@ const doggo: commandInterface = {
             let url = e.args[0]
             if(!url) return e.message.reply("Por favor mande uma url ou mencione alguém\n Ex: DOGE.pet https://imgur.com/qjUFwno.png");
 
-            //Check for mention
-            if (url.startsWith('<@') && url.endsWith('>')) {
-                url = url.slice(2, -1);
-        
-                if (url.startsWith('!')) {
-                    url = url.slice(1);
-                }
-
-                const user = await e.client.users.fetch(Util.binaryToID(BigInt(String(url)).toString(2))); //I hate snowflakes
-                url = user.displayAvatarURL().replace(/.webp/, ".png?size=4096");
-            }
-
-            //Make and Send gif
+            
             try {
+                //Check for mention
+                if (url.startsWith('<@') && url.endsWith('>')) {
+                    url = url.slice(2, -1);
+            
+                    if (url.startsWith('!')) {
+                        url = url.slice(1);
+                    }
+                    
+                    const user = await e.client.users.fetch(Util.binaryToID(BigInt(String(url)).toString(2))); //I hate snowflakes
+                    url = user.displayAvatarURL().replace(/.webp/, ".png?size=4096");
+                }
+                
+                //Make and Send gif
                 let animatedGif = await petPetGif(url)
                 const attachment = new MessageAttachment(animatedGif, 'pet.gif');
                 return e.message.reply({embeds: [embed], files: [attachment]});
