@@ -1,5 +1,5 @@
 //Imports
-import { messageEvent, interactionEvent, commandInterface } from "../index";
+import { messageEvent, interactionEvent, commandInterface } from "../util/interfaces";
 
 const kaomojis = ['(つ✧ω✧)つ', '(づ￣ ³￣)づ', '(づ ◕‿◕ )づ', '(づ◡﹏◡)づ', ' 	(つ . •́ _ʖ •̀ .)つ'] // is there a kaomoji package?
 

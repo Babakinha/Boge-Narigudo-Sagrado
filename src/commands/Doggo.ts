@@ -1,5 +1,5 @@
 //Imports
-import { messageEvent, interactionEvent, commandInterface } from "../index";
+import { messageEvent, interactionEvent, commandInterface } from "../util/interfaces";
 import { MessageEmbed } from 'discord.js'
 import nekoClient from 'nekos.life'
 

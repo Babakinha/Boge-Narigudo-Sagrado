@@ -13,7 +13,10 @@
     "bot",
     "discord"
   ],
-  "repository": "https://github.com/Babakinha/Boge-Narigudo-Sagrado",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Babakinha/Boge-Narigudo-Sagrado.git"
+  },
   "author": "Babakinha",
   "license": "ISC",
   "dependencies": {
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "@types/node": "^15.12.2",
+    "@types/node-fetch": "^2.5.10",
     "dotenv": "^10.0.0",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.3"
