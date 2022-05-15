@@ -31,7 +31,6 @@ export default async function missileGif(url: string, key = "0x00e511", similari
             return resolve(missileGif_stream);
 
         }catch(e) {
-            console.log(e)
             return reject(e);
         }
     });

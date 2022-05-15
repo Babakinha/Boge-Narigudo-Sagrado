@@ -10,12 +10,10 @@ const flipa: commandInterface = {
 
     run: {
         async message(e: messageEvent){
-            let url = e.args[0];
-
-            if(!url) return e.message.reply("Por favor mande uma url ou mencione alguém\nEx: DOGE.missile <https://imgur.com/qjUFwno.png>");
 
             try {
-                url = await imageUtils.getImageUrl(url, e.client);
+                let url = await imageUtils.getImageUrl(e);
+                if(!url) return e.message.reply("Por favor mande uma url ou mencione alguém\nEx: DOGE.missile <https://imgur.com/qjUFwno.png>");
 
 
                 let videoBuffer = await missileGif(url);
@@ -34,9 +32,9 @@ const flipa: commandInterface = {
             if(!url) return e.interaction.reply("Por favor mande uma url ou mencione alguém\nEx: DOGE.missile <https://imgur.com/qjUFwno.png>");
 
             try {
-                url = await imageUtils.getImageUrl(String(url), e.client);
+                //TODO: url = await imageUtils.getImageUrl(e);
 
-                let videoBuffer = await missileGif(url);
+                let videoBuffer = await missileGif(url as string);
                 let attatchment = new MessageAttachment(videoBuffer, 'kaboom.mp4')
 
                 return e.interaction.reply({content:"Toma", files:[attatchment]});

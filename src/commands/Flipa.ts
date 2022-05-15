@@ -10,13 +10,11 @@ const flipa: commandInterface = {
 
     run: {
         async message(e: messageEvent){
-            let url = e.args[0];
             const speed = Number(e.args[1]);
 
-            if(!url) return e.message.reply("Por favor mande uma url ou mencione alguém\nEx: DOGE.flip <https://imgur.com/qjUFwno.png> 4");
-
             try {
-                url = await imageUtils.getImageUrl(url, e.client);
+                let url = await imageUtils.getImageUrl(e);
+                if(!url) return e.message.reply("Por favor mande uma url ou mencione alguém\nEx: DOGE.flip <https://imgur.com/qjUFwno.png> 4");
 
 
                 let gifBuffer = await flipGif(url, speed);
@@ -37,9 +35,9 @@ const flipa: commandInterface = {
             if(!url) return e.interaction.reply("Por favor mande uma url ou mencione alguém\nEx: DOGE.flip <https://imgur.com/qjUFwno.png> 4");
 
             try {
-                url = await imageUtils.getImageUrl(String(url), e.client);
+                //TODO: url = await imageUtils.getImageUrl(e);
 
-                let gifBuffer = await flipGif(url, speed);
+                let gifBuffer = await flipGif(url as string, speed);
                 let attatchment = new MessageAttachment(gifBuffer, 'girando.gif')
 
                 return e.interaction.reply({content:"Toma", files:[attatchment]});

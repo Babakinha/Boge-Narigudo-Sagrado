@@ -1,4 +1,4 @@
-import { Client } from "discord.js";
+import { messageEvent, interactionEvent } from './interfaces';
 import internal from "stream";
 
 import messageUtil from "./messageUtil";
@@ -21,12 +21,12 @@ export default {
         })
     
     },
-    async getImageUrl(text: string, client: Client | undefined): Promise<string> {
+    async getImageUrl(e: messageEvent, argIndex: number = 0): Promise<string> {
         return new Promise(async (resolve, reject) => {
-            if(text.startsWith("<@")) {
-                if(client) {
+            if(e.args.length > 0 && e.args[argIndex].startsWith("<@")) {
+                if(e.client) {
                     let imageUrl;
-                    await messageUtil.getUserByMention(text, client).then((user) => {
+                    await messageUtil.getUserByMention(e.args[argIndex], e.client).then((user) => {
                         imageUrl = user.displayAvatarURL().replace(".webp", ".png?size=4096");
                     }, () => {});
                     if(imageUrl) return resolve(imageUrl);
@@ -34,9 +34,14 @@ export default {
                     return reject('Expected client for an mention');
                 }
             }
-            //if(await this.isValidImage(text))
-                return resolve(text);
-            return reject('Not Valid image');
+
+            if(e.message.attachments.size > 0) {
+                return resolve(e.message.attachments.at(0)!.url);
+            }
+
+            if(e.args.length > 0 && await this.isValidImage(e.args[argIndex]))
+                return resolve(e.args[argIndex]);
+            return reject('No image');
         })
     },
     async stream2buffer( stream:internal.Readable ):Promise<Buffer> {
