@@ -12,7 +12,7 @@ const embed = new MessageEmbed()
     .setColor(0x40E0D0)
     .setURL("https://nekos.life")
     .setImage("https://cdn.discordapp.com/avatars/487644363124637718/a_415f94cbfab6c764d6ef5efe78a11a59.gif?size=4096")
-    .setFooter("Cortesia de nekos.life", "https://avatars.githubusercontent.com/u/34457007");
+    .setFooter({ text: "Cortesia de nekos.life", iconURL: "https://avatars.githubusercontent.com/u/34457007"});
 
 //Command
 const doggo: commandInterface = {

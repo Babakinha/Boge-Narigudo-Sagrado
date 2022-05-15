@@ -1,8 +1,9 @@
+/* Disabled Temporarly
+
 //Imports
 import { messageEvent, interactionEvent, commandInterface } from "../util/interfaces";
 import { MessageEmbed, MessageAttachment } from 'discord.js'
 import imageUtil from "../util/imageUtil";
-const petPetGif = require('pet-pet-gif');
 
 //Embed
 let embed = new MessageEmbed()
@@ -59,3 +60,4 @@ const doggo: commandInterface = {
 };
 
 module.exports = doggo;
+*/

@@ -9,20 +9,32 @@ import fetch from 'node-fetch'
 export default {
     async isValidImage(url: string):Promise<boolean> {
         return new Promise(async (resolve, reject) => {
-            let data = await fetch(url)
-            if(data.status == 200 && (((data.headers.get('content-type')) as string).match(/(image)+\//g))?.length != 0) {
-                    resolve(true);
-            }else console.log(data.status == 200 && (((data.headers.get('content-type')) as string).match(/(image)+\//g))?.length != 0) 
-            resolve(false)
+            try {
+                let data = await fetch(url)
+
+                if(data.status == 200 && (((data.headers.get('content-type')) as string).match(/(image)+\//g))?.length != 0)
+                    return resolve(true);
+                else
+                    return resolve(false);
+
+            }catch(e) {
+                return resolve(false);
+            }
         })
     
     },
     async getImageUrl(text: string, client: Client | undefined): Promise<string> {
         return new Promise(async (resolve, reject) => {
-            if(client) {
-                await messageUtil.getUserByMention(text, client).then((user) => {
-                    resolve(user.displayAvatarURL());
-                }, () => {});
+            if(text.startsWith("<@")) {
+                if(client) {
+                    let imageUrl;
+                    await messageUtil.getUserByMention(text, client).then((user) => {
+                        imageUrl = user.displayAvatarURL();
+                    }, () => {});
+                    if(imageUrl) return resolve(imageUrl);
+                }else {
+                    reject('Expected client for an mention');
+                }
             }
             if(await this.isValidImage(text)) resolve(text);
             reject('Not Valid image');

@@ -3,27 +3,30 @@ import { commandInterface, interactionEvent, messageEvent } from "./interfaces";
 
 export default {
     
-    async getUserByMention(text: String, client: Client): Promise<User> {
+    async getUserByMention(text: string, client: Client): Promise<User> {
 
         return new Promise(async (resolve, reject) => {
 
+            if (!text) return reject('Not a mention');;
+
             if (text.startsWith('<@') && text.endsWith('>')) {
                 text = text.slice(2, -1);
-        
+
                 if (text.startsWith('!')) {
                     text = text.slice(1);
                 }
 
-                try{
-                    const user = await client.users.fetch(Util.binaryToID(BigInt(String(text)).toString(2)));
-                    resolve(user);
-                }catch(e) {
-                    reject('Not a valid user');
-                }
+                const user = client.users.cache.get(text);
+
+                if (user)
+                    return resolve(user);
+                else
+                    return reject('Not a valid user');
             }
 
+
             reject('Not a mention');
-            
+
         });
 
     },

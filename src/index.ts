@@ -31,11 +31,11 @@ Commands.loadCommands(__dirname + '/commands/');
 //Events
 Client.once('ready', async () => {
     console.log("Bot is on!");
-    Client.user!.setActivity('A mãe do samir na cama', { type: 'PLAYING'});
+    Client.user!.setActivity('Being a good boi', { type: 'COMPETING'});
 
 });
 
-Client.on('interaction', async (interaction) => {
+Client.on('interactionCreate', async (interaction) => {
     if(!interaction.isCommand()) return;
     try {
         Commands.getCommand(interaction.commandName).interaction({
@@ -54,7 +54,7 @@ Client.on('interaction', async (interaction) => {
     }
 });
 
-Client.on('message', async (message) => {
+Client.on('messageCreate', async (message) => {
     if (!message.content.toLowerCase().startsWith(Prefix) || message.author.bot) return;
 
     const args: string[] = message.content.slice(Prefix.length).trim().split(/ +/);
