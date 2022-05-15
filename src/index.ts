@@ -1,11 +1,9 @@
 
 //Imports
-import * as Fs from 'fs';
 import * as Discord from 'discord.js';
 import * as dotenv from "dotenv";
-import { Prefix } from './config/defaultConfig.json';
+import { Prefixes } from './config/defaultConfig.json';
 
-import { commandInterface } from './util/interfaces'
 import commandHandler from './util/commandHandler';
 
 //Load environment variables
@@ -31,7 +29,7 @@ Commands.loadCommands(__dirname + '/commands/');
 //Events
 Client.once('ready', async () => {
     console.log("Bot is on!");
-    Client.user!.setActivity('Being a good boi', { type: 'COMPETING'});
+    Client.user!.setActivity('Being a good boi', { type: 'PLAYING'});
 
 });
 
@@ -55,9 +53,20 @@ Client.on('interactionCreate', async (interaction) => {
 });
 
 Client.on('messageCreate', async (message) => {
-    if (!message.content.toLowerCase().startsWith(Prefix) || message.author.bot) return;
+    if (message.author.bot) return;
 
-    const args: string[] = message.content.slice(Prefix.length).trim().split(/ +/);
+    let prefix: string = "";
+
+    for(const i in Prefixes) {
+        if(message.content.toLowerCase().startsWith(Prefixes[i])){
+            prefix = Prefixes[i];
+            break;
+        }
+    };
+
+    if(!prefix) return;
+
+    const args: string[] = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift()!.toLowerCase();
     
     try {

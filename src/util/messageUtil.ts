@@ -1,5 +1,5 @@
-import { Client, CommandInteraction, Interaction, Message, User, Util } from "discord.js";
-import { commandInterface, interactionEvent, messageEvent } from "./interfaces";
+import { Client, User } from "discord.js";
+import { interactionEvent, messageEvent } from "./interfaces";
 
 export default {
     
