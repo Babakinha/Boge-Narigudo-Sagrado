@@ -4,9 +4,10 @@
   "description": "Sagrado",
   "main": "index.js",
   "scripts": {
-    "start": "node ./build",
+    "start": "node ./build ",
     "dev": "ts-node ./src",
-    "build": "tsc"
+    "build": "tsc && npm run copy-files",
+    "copy-files": "cp ./src/assets/ -r ./build/"
   },
   "keywords": [
     "Doge",
