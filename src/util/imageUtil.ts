@@ -41,7 +41,7 @@ export default {
 
             if(e.args.length > 0 && await this.isValidImage(e.args[argIndex]))
                 return resolve(e.args[argIndex]);
-            return reject('No image');
+            return resolve('');
         })
     },
     async stream2buffer( stream:internal.Readable ):Promise<Buffer> {
