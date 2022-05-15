@@ -1,4 +1,5 @@
-import { Client, User, Util } from "discord.js";
+import { Client, CommandInteraction, Interaction, Message, User, Util } from "discord.js";
+import { commandInterface, interactionEvent, messageEvent } from "./interfaces";
 
 export default {
     
@@ -25,5 +26,16 @@ export default {
             
         });
 
+    },
+    async getImageInMessage(e: messageEvent | interactionEvent): Promise<Buffer> {
+        const isMessageEvent = (p: any): p is messageEvent => p.hasOwnProperty('message');
+        return new Promise(async (resolve, reject) => {
+            if(isMessageEvent(e)){
+                console.log("is message")
+            }else {
+                console.log("is interaction")
+            }
+
+        })
     }
 }

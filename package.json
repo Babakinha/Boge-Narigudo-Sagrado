@@ -4,7 +4,7 @@
   "description": "Sagrado",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "keywords": [
     "Doge",
@@ -21,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^13.0.0-dev.a3cbcca13da1af416c219bd64a0a6e84bb87a057",
+    "ffmpeg-stream": "^0.7.0",
     "nekos.life": "^2.0.7",
     "node-fetch": "^2.6.1",
     "pet-pet-gif": "^1.0.8"
