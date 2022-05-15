@@ -14,7 +14,7 @@ If im not wrong you can submit an issue or make a Pull request!
 Here are some commands that i made already
 * `ping`: Returns the bot's ping
 * `doggo`: Returns a random doggo image (from nekos.life)
-* `flipa`: Makes an image spin
+* `flipa`: Makes an image spin/flip
 * `missile`: Kaboom
 ## Invite
 [CLICK HERE TO BE A BIG [[DOG]]](https://discord.com/api/oauth2/authorize?client_id=854466771507085342&permissions=2251672896&scope=bot%20applications.commands)
