@@ -1,9 +1,7 @@
-import { Converter } from "ffmpeg-stream";
 import { Client } from "discord.js";
 import internal from "stream";
 
 import messageUtil from "./messageUtil";
-import { request } from "http";
 import fetch from 'node-fetch'
 
 export default {
@@ -29,15 +27,16 @@ export default {
                 if(client) {
                     let imageUrl;
                     await messageUtil.getUserByMention(text, client).then((user) => {
-                        imageUrl = user.displayAvatarURL();
+                        imageUrl = user.displayAvatarURL().replace(".webp", ".png?size=4096");
                     }, () => {});
                     if(imageUrl) return resolve(imageUrl);
                 }else {
-                    reject('Expected client for an mention');
+                    return reject('Expected client for an mention');
                 }
             }
-            if(await this.isValidImage(text)) resolve(text);
-            reject('Not Valid image');
+            //if(await this.isValidImage(text))
+                return resolve(text);
+            return reject('Not Valid image');
         })
     },
     async stream2buffer( stream:internal.Readable ):Promise<Buffer> {
