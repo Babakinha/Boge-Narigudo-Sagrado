@@ -23,10 +23,13 @@
   "author": "Babakinha",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/opus": "^0.5.3",
+    "@discordjs/voice": "^0.9.0",
     "discord.js": "^13.7.0",
     "ffmpeg-stream": "^0.7.0",
     "nekos.life": "^2.0.7",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "sodium": "^3.0.2"
   },
   "devDependencies": {
     "@types/node": "^15.12.2",
