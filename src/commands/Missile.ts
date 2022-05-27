@@ -1,5 +1,5 @@
 //Imports
-import { messageEvent, interactionEvent, commandInterface } from "../util/interfaces";
+import { messageEvent, interactionEvent, commandInterface, commandCategory } from "../util/interfaces";
 import imageUtils from '../util/imageUtil'
 import { MessageAttachment } from "discord.js";
 import missileGif from "../edits/missileGif";
@@ -7,6 +7,10 @@ import missileGif from "../edits/missileGif";
 //Command
 const flipa: commandInterface = {
     names: ["missile", "missel", "explode", "explodir"],
+    category: commandCategory.Video,
+    description: "Kaboom.",
+
+
 
     run: {
         async message(e: messageEvent){

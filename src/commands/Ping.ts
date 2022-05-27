@@ -1,11 +1,15 @@
 //Imports
-import { messageEvent, interactionEvent, commandInterface } from "../util/interfaces";
+import { messageEvent, interactionEvent, commandInterface, commandCategory } from "../util/interfaces";
 
 const kaomojis = ['(つ✧ω✧)つ', '(づ￣ ³￣)づ', '(づ ◕‿◕ )づ', '(づ◡﹏◡)づ', ' 	(つ . •́ _ʖ •̀ .)つ'] // is there a kaomoji package?
 
 //Command
 const ping: commandInterface = {
     names: ["ping", "pingu", "pong"],
+    category: commandCategory.Utilidades,
+    description: "Ping(Latencia) do bot.",
+
+
 
     run: {
         async message(e: messageEvent){

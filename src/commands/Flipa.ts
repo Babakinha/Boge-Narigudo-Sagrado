@@ -1,12 +1,16 @@
 //Imports
-import { messageEvent, interactionEvent, commandInterface } from "../util/interfaces";
+import { messageEvent, interactionEvent, commandInterface, commandCategory } from "../util/interfaces";
 import imageUtils from '../util/imageUtil'
 import { MessageAttachment } from "discord.js";
 import flipGif from "../edits/flipGif";
 
 //Command
 const flipa: commandInterface = {
-    names: ["flipa", "flip", "gira"],
+    names: ["flipa", "flip", "gira", "spin"],
+    category: commandCategory.Video,
+    description: "You spin me right round baby right round...",
+
+
 
     run: {
         async message(e: messageEvent){

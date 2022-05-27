@@ -1,5 +1,5 @@
 //Imports
-import { messageEvent, interactionEvent, commandInterface } from "../util/interfaces";
+import { messageEvent, interactionEvent, commandInterface, commandCategory } from "../util/interfaces";
 import { MessageEmbed } from 'discord.js'
 import nekoClient from 'nekos.life'
 
@@ -17,6 +17,8 @@ const embed = new MessageEmbed()
 //Command
 const doggo: commandInterface = {
     names: ["doge", "dog", "doggo"],
+    category: commandCategory.Imagem,
+    description: "Manda um doginho aleatorio :3",
 
     run: {
         async message(e: messageEvent){
