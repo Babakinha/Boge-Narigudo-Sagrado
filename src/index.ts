@@ -17,7 +17,11 @@ const Token = process.env.TOKEN;
 //Discord Variables
 
 var ClientOptions : Discord.ClientOptions = {
-    intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES]
+    intents: [
+        Discord.Intents.FLAGS.GUILDS,
+        Discord.Intents.FLAGS.GUILD_MESSAGES,
+        Discord.Intents.FLAGS.GUILD_VOICE_STATES,
+    ]
 };
 
 const Client = new Discord.Client(ClientOptions);
@@ -36,9 +40,11 @@ Client.once('ready', async () => {
 Client.on('interactionCreate', async (interaction) => {
     if(!interaction.isCommand()) return;
     try {
-        Commands.getCommand(interaction.commandName).interaction({
+        Commands.getCommand(interaction.commandName).run.interaction({
             interaction: interaction,
-            client: Client
+            client: Client,
+            commandHandler: Commands
+
         });
     }catch(e) {
         let errorMessage = (e as Error).message
@@ -68,12 +74,13 @@ Client.on('messageCreate', async (message) => {
 
     const args: string[] = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift()!.toLowerCase();
-    
+
     try {
-        Commands.getCommand(command).message({
+        Commands.getCommand(command).run.message({
             message: message,
             args: args,
-            client: Client           
+            client: Client,
+            commandHandler: Commands
         });
     } catch (e) {
         let errorMessage = (e as Error).message

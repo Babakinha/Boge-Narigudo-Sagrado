@@ -8,9 +8,9 @@ export default class commandHandler{
 
     };
 
-    Commands = new Collection<commandInterface['names'], commandInterface['run']>();
+    Commands = new Collection<commandInterface['names'], commandInterface>();
 
-    public getCommand(name: string): commandInterface['run'] {
+    public getCommand(name: string): commandInterface {
         const commandFile = this.Commands.find((r, n) => {if(!n) return false;return n.includes(name)});
         if(commandFile) return commandFile;
         else throw new Error('CommandNotFound');
@@ -29,7 +29,7 @@ export default class commandHandler{
             }else {
                 if(file.endsWith('.js') || file.endsWith('.ts')){
                     let command = require(Path.join(String(path), file)) as commandInterface
-                    this.Commands.set(command.names, command.run);
+                    this.Commands.set(command.names, command);
                 }else continue;
             }
 
